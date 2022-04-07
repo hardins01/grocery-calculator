@@ -1,5 +1,5 @@
 # import the grocery_manager class from the other file
-from grocery_manager import Grocery_Manager, clean_initials, remove_extraneous_whitespace
+from grocery_manager import Grocery_Manager, clean_initials
 
 # the initials that represent each person in the grocery calculator
 INITIALS = "slb"
@@ -11,7 +11,7 @@ groc_man = Grocery_Manager(INITIALS)
 while 1:
      
      # get the user's input
-     print(": ", end="")
+     print("> ", end="")
      command = input()
 
      # check if the command is the stop command
@@ -27,7 +27,10 @@ while 1:
      initials = clean_initials(command[space_idx:])
 
      # create a new entry in the grocery manager
-     groc_man.new_entry(price, initials)
+     entry_id = groc_man.new_entry(price, initials)
+
+     # confirm the entry, printing its id for reference
+     print("ID#{}\t{} {}".format(entry_id, price, initials))
 
 # print the results
 groc_man.print_data()
