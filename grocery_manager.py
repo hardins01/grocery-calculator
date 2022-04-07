@@ -35,4 +35,24 @@ class Grocery_Manager:
                print(f"{person}:       $ {self.people_totals[person]:.2f}")
           
           # print the overall total
-          print("Total:   $", self.total)
+          print(f"Total:   ${self.total:.2f}")
+
+
+
+# 
+# beyond the Grocery_Manager class, we also want several other helper functions
+# 
+
+
+# function to remove every special character in the input besides the lowercase letters
+def clean_initials(initials):
+
+     # loop through the string, removing everything except lowercase letters
+     for char in initials:
+          if not char.islower():
+               initials = initials.replace(char, "")
+     
+     # return the result
+     return initials 
+
+

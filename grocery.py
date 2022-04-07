@@ -1,5 +1,5 @@
 # import the grocery_manager class from the other file
-from grocery_manager import Grocery_Manager
+from grocery_manager import Grocery_Manager, clean_initials, remove_extraneous_whitespace
 
 # the initials that represent each person in the grocery calculator
 INITIALS = "slb"
@@ -18,11 +18,16 @@ while 1:
      if command == "stop":
           break
 
-     # separate command into the necessary components (price and initials)
-     split_command = command.split()
+     # remove all extra whitespaces from command, leaving everything to be separated by a single space
+     command = " ".join(command.split())
+
+     # search for the first space in the command and split it between the price and the initials
+     space_idx = command.find(" ")
+     price = float (command[:space_idx])
+     initials = clean_initials(command[space_idx:])
 
      # create a new entry in the grocery manager
-     groc_man.new_entry(float(split_command[0]), split_command[1])
+     groc_man.new_entry(price, initials)
 
 # print the results
 groc_man.print_data()
