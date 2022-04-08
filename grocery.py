@@ -91,7 +91,7 @@ while 1:
 
 
      
-     elif command == "r" or command == "receipt":           # r or receipt command
+     elif command == "r" or command == "receipt" or command == "ls":           # r or receipt or ls command
 
           # print all active non-deleted entries and current subtotals
           pass
@@ -101,7 +101,7 @@ while 1:
           # print all valid commands
           pass 
 
-     elif command == "s" or command == "stop" or command == "e" or command == "exit":          # s or stop or e or exit command
+     elif command == "s" or command == "stop" or command == "e" or command == "exit" or command == "q" or command == "quit":          # s or stop or e or exit or q or quit command
 
           # exit from the while loop
           break
