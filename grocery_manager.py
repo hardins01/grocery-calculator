@@ -14,6 +14,21 @@ class Grocery_Manager:
 
           # an array of every entry, which is an array of tuples (each tuple contains the price, a float, followed by the initials of that entry)
           self.entries = []
+
+          # an array containing the ids of the entries that have been deleted
+          self.deleted_entries = []
+     
+     # function to verify if the given initials are valid for this grocery manager
+     # assume that all whitespace has been removed from initials
+     # return 0 for invalid initials, return 1 for valid initials
+     def verify_initials(self, initials):
+
+          # loop through initials to find one that doesn't exist as a key in self.people_totals
+          for initial in initials:
+               if initial not in self.people_totals.keys():
+                    return 0
+          
+          return 1
      
      # function to add the given entry to the given peoples' subtotals
      # assume that initials has been error checked (only valid initials, no spaces)
@@ -44,23 +59,38 @@ class Grocery_Manager:
           
           # print the overall total
           print(f"Total:   $ {self.total:.2f}")
-
-
-
-# 
-# beyond the Grocery_Manager class, we also want several other helper functions
-# 
-
-
-# function to remove every special character in the input besides the lowercase letters
-def clean_initials(initials):
-
-     # loop through the string, removing everything except lowercase letters
-     for char in initials:
-          if not char.islower():
-               initials = initials.replace(char, "")
      
-     # return the result
-     return initials 
+     # function to delete an entry, given its id
+     # returns 1 if successful, 0 if the id wasn't found, -1 if the entry has already been deleted
+     def delete_entry(self, entry_id):
+
+          # check if the given id is too large/too small
+          if entry_id < 0 or entry_id >= len(self.entries):
+               return 0
+          
+          # check if the entry has already been deleted
+          if entry_id in self.deleted_entries:
+               return -1
+          
+          # delete the entry
+          self.deleted_entries.append(entry_id)
+          item_subtotal = self.entries[entry_id][0] / len(self.entries[entry_id][1])
+          for initial in self.entries[entry_id][1]:
+               self.people_totals[initial] -= item_subtotal
+          self.total -= self.entries[entry_id][0]
+          return 1
+     
+     # function to drop the previous entry, the most recent one that's been added
+     # return 1 if successful, 0 or -1 if not
+     def delete_prev_entry(self):
+
+          # find the entry closest to the end of the array that hasn't been deleted already
+          return_code = 0
+          delete_id = len(self.entries) - 1
+          while(return_code != 1 and delete_id >= 0):
+               return_code = self.delete_entry(delete_id)
+               delete_id -= 1
+          
+          return return_code
 
 
