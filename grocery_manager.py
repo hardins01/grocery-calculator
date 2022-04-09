@@ -49,17 +49,32 @@ class Grocery_Manager:
           self.entries.append((item_total, initials))
           return len(self.entries)-1
 
-     # function to print everyone's subtotals, as well as the total
-     def print_data(self):
+     # function to print the final results, which are the subtotals and total
+     def print_results(self):
 
           # print everyone's subtotals
           print("Results:")
           for person in self.people_totals:
-               print(f"{person}:       $ {self.people_totals[person]:.2f}")
+               print(f"{person}:       $ {abs(self.people_totals[person]):.2f}")
           
           # print the overall total
           print(f"Total:   $ {self.total:.2f}")
      
+     # function to print the current status, which is every active entry AND the subtotals and total
+     def print_status(self):
+
+          # print all active entries
+          print("")
+          for i in range(0, len(self.entries)):
+               if i not in self.deleted_entries:
+                    print("ID#{}\t$ {} {}".format(i, self.entries[i][0], self.entries[i][1]))
+          
+          # print everyones subtotal along with the total
+          print("")
+          for person in self.people_totals:
+               print(f"{person}:       $ {abs(self.people_totals[person]):.2f}")
+          print(f"Total:   $ {self.total:.2f}\n")
+
      # function to delete an entry, given its id
      # returns 1 if successful, 0 if the id wasn't found, -1 if the entry has already been deleted
      def delete_entry(self, entry_id):

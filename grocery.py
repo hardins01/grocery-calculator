@@ -50,7 +50,7 @@ while 1:
                          entry_id = groc_man.new_entry(price, initials)
 
                          # confirm the entry, printing its id for reference
-                         print("ID#{}\t{} {}".format(entry_id, price, initials))
+                         print("ID#{}\t$ {} {}".format(entry_id, price, initials))
 
      elif command == "d" or command == "delete" or command == "drop":       # d or delete/drop command
 
@@ -94,7 +94,7 @@ while 1:
      elif command == "r" or command == "receipt" or command == "ls":           # r or receipt or ls command
 
           # print all active non-deleted entries and current subtotals
-          pass
+          groc_man.print_status()
 
      elif command == "h" or command == "help":         # h or help command
 
@@ -109,4 +109,4 @@ while 1:
      
 
 # print the results
-groc_man.print_data()
+groc_man.print_results()
