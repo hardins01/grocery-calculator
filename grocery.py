@@ -4,6 +4,10 @@ from grocery_manager import Grocery_Manager
 # the initials that represent each person in the grocery calculator
 INITIALS = "slb"
 
+# print the introduction message
+print("Hello, Welcome to Grocery-Calculator!    By Sebastian Hardin")
+print("Enter h or help for a list of valid commands")
+
 # create the grocery_manager
 groc_man = Grocery_Manager(INITIALS)
 
@@ -23,7 +27,7 @@ while 1:
           
           # check the number of parameters
           if len(user_input) < 3:
-               print("Error: Invalid input for 'add' command (see 'help' for details)")
+               print("Error: invalid input for 'add' command (see 'help' for details)")
           else:
                # get the price, checking for error
                price = 0.0
@@ -31,7 +35,7 @@ while 1:
                try:
                     price = float(user_input[1])
                except ValueError as e:
-                    print("Error: Invalid input for 'add' command (see 'help' for details)")
+                    print("Error: invalid input for 'add' command (see 'help' for details)")
                     valid_price = False
                
                if valid_price:
@@ -44,13 +48,13 @@ while 1:
                     # verify the initials before attempting the entry
                     valid_initials = groc_man.verify_initials(initials)
                     if valid_initials == 0:
-                         print("Error: Invalid initials given")
+                         print("Error: invalid initials given")
                     else:
                          # create a new entry in the grocery manager
                          entry_id = groc_man.new_entry(price, initials)
 
                          # confirm the entry, printing its id for reference
-                         print("ID#{}\t$ {} {}".format(entry_id, price, initials))
+                         print("ID#{}\t$ {} {}".format(entry_id, "{:.2f}".format(price), initials))
 
      elif command == "d" or command == "delete" or command == "drop":       # d or delete/drop command
 
@@ -62,9 +66,9 @@ while 1:
 
                # check the return code
                if return_code == 0 or return_code == -1:
-                    print("Error: No previous entry to delete")
+                    print("Error: no previous entry to delete")
                else:
-                    print("Success: Previous entry has been deleted")
+                    print("Success: previous entry has been deleted")
                
           else:     # the user wants to delete a specific entry
 
@@ -74,7 +78,7 @@ while 1:
                try:
                     entry_id = int(user_input[1])
                except ValueError as e:
-                    print("Error: Invalid input for 'delete'/'drop' command (see 'help' for details)")
+                    print("Error: invalid input for 'delete'/'drop' command (see 'help' for details)")
                     valid_id = False
                
                # continue on if the given id is an integer
@@ -83,11 +87,11 @@ while 1:
 
                     # check the return code
                     if return_code == 0:
-                         print("Error: Entry id given is outside the valid range of entry id's")
+                         print("Error: entry id given is outside the valid range of entry id's")
                     elif return_code == -1:
-                         print("Error: Entry has already been deleted")
+                         print("Error: entry has already been deleted")
                     else:
-                         print("Success: Entry ID#{} has been deleted".format(entry_id))
+                         print("Success: entry ID#{} has been deleted".format(entry_id))
 
 
      
@@ -123,7 +127,13 @@ while 1:
           # exit from the while loop
           break
 
+     else:
+
+          # tell the user their input was invalid
+          print("Error: command '{}' not found (see 'help' for details)".format(command))
      
 
 # print the results
+print("")
 groc_man.print_results()
+print("\nThank you for using Grocery-Calculator!")

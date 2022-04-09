@@ -67,7 +67,14 @@ class Grocery_Manager:
           print("")
           for i in range(0, len(self.entries)):
                if i not in self.deleted_entries:
-                    print("ID#{}\t$ {} {}".format(i, self.entries[i][0], self.entries[i][1]))
+                    string_to_print = "ID#{}  $ {} {}".format(i, "{:.2f}".format(self.entries[i][0]), self.entries[i][1])
+                    correct_spacing = ""
+                    for j in range(len(string_to_print), 32):
+                         correct_spacing += " "
+                    print(string_to_print, end=correct_spacing)
+               
+                    if (i+1) % 4 == 0:
+                         print("")
           
           # print everyones subtotal along with the total
           print("")
