@@ -2,11 +2,15 @@
 from grocery_manager import Grocery_Manager
 
 # the initials that represent each person in the grocery calculator
+# edit this string to contain the valid initials for each person involved
+# a valid initial is anything except whitespace, but it's suggested to not use numbers to avoid confusion
+# capital and lowercase letters are allowed and will be distinguished between, and any other printable special character is allowed as well
+# this string cannot contain anything except the unique initials
 INITIALS = "slb"
 
 # print the introduction message
-print("Hello, Welcome to Grocery-Calculator!    By Sebastian Hardin")
-print("Enter h or help for a list of valid commands")
+print("Hello, Welcome to Grocery-Calculator!         By Sebastian Hardin")
+print("Enter 'h' or 'help' for a list of valid commands")
 
 # create the grocery_manager
 groc_man = Grocery_Manager(INITIALS)
@@ -97,8 +101,12 @@ while 1:
      
      elif command == "r" or command == "receipt" or command == "ls":           # r or receipt or ls command
 
-          # print all active non-deleted entries and current subtotals
-          groc_man.print_status()
+          # validate the rest of the input is valid
+          if len(user_input) != 1:
+               print("Error: invalid input for 'r'/'ls'/'receipt' command (see 'help' for details)")
+          else:
+               # print all active non-deleted entries and current subtotals
+               groc_man.print_status()
 
      elif command == "h" or command == "help":         # h or help command
 

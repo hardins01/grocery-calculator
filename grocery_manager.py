@@ -64,6 +64,7 @@ class Grocery_Manager:
      def print_status(self):
 
           # print all active entries
+          num_printed = 0
           print("")
           for i in range(0, len(self.entries)):
                if i not in self.deleted_entries:
@@ -72,12 +73,15 @@ class Grocery_Manager:
                     for j in range(len(string_to_print), 32):
                          correct_spacing += " "
                     print(string_to_print, end=correct_spacing)
+                    num_printed += 1
                
-                    if (i+1) % 4 == 0:
+                    if num_printed % 4 == 0:
                          print("")
           
           # print everyones subtotal along with the total
           print("")
+          if num_printed % 4 != 0:
+               print("")
           for person in self.people_totals:
                print(f"{person}:       $ {abs(self.people_totals[person]):.2f}")
           print(f"Total:   $ {self.total:.2f}\n")
