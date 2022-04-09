@@ -99,7 +99,24 @@ while 1:
      elif command == "h" or command == "help":         # h or help command
 
           # print all valid commands
-          pass 
+          print(
+               "\n"\
+               "\t\tAll valid commands for Grocery-Calculator:\n\n\n"\
+               "\ta / add : Add a new item to the grocery run\n\n"\
+               "\t\t> { a | add } PRICE INITIALS\n\n"\
+               "\t\tPRICE = the price of the item, must be convertable to a float\n"\
+               "\t\tINITIALS = the initials of the people paying for this item\n"\
+               "\t\t\tnote: an initial can appear multiple times to achieve the desired ratio of cost per person\n\n"\
+               "\tr / receipt / ls : Print the currently active items, along with everyone's subtotals\n\n"\
+               "\t\t> { r | ls | receipt }\n\n"\
+               "\td / drop / delete : Delete a specific item or the most recently added active item\n\n"\
+               "\t\t> { d | drop | delete } { ENTRY_ID | { p | prev | previous } }\n\n"\
+               "\t\tENTRY_ID = the id of the item to be deleted, must be a valid id that hasn't already been deleted\n\n"\
+               "\tq / quit / s / stop / e / exit : Exit the program, printing everyone's totals that they owe\n\n"\
+               "\t\t> { q | s | e | quit | stop | exit }\n\n"\
+               "\th / help : Bring up this menu, a list of all available commands to use\n\n"\
+               "\t\t> { h | help }\n\n"
+          )
 
      elif command == "s" or command == "stop" or command == "e" or command == "exit" or command == "q" or command == "quit":          # s or stop or e or exit or q or quit command
 
