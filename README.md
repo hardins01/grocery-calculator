@@ -1,6 +1,6 @@
 # grocery-calculator
 
-A python program to calculate the bill that everyone owes after a grocery run. When only one person pays at the grocery store, there needs to be a way to calculate the money each person needs to pay, since not every item is equally shared. This program provides a convenient command-line-style interface to replicate your grocery store receipt, correctly divvying up items by price. Each item is added one at a time, along with the initials of the people that are partaking in that item. See below for more details.
+This is a python program to calculate the bill that everyone owes after a grocery run. When only one person pays at the grocery store, there needs to be a way to calculate the money each person needs to pay, since not every item is equally shared. This program provides a convenient command-line-style interface to replicate your grocery store receipt, correctly divvying up items by price. Each item is added one at a time, along with the initials of the people that are partaking in that item. See below for more details.
 
 ## Installation
 
@@ -14,7 +14,7 @@ Before use, open the file `grocery.py` and change the global variable called `IN
 
 To run the program, navigate into the `grocery-calculator` directory and enter:
 
-`$ python grocery.py`
+`python grocery.py`
 
 The grocery-calculator works like a command-line-interface, with the following valid commands:
 
@@ -24,13 +24,15 @@ The grocery-calculator works like a command-line-interface, with the following v
      PRICE = the price of the item, which must be convertable to a float
           examples: 4.99, 8, 23.1, 2.09
      INITIALS = a series of initials that must be a subset of those provided at the top of grocery.py
-          note: an initial can appear multiple times to achieve the correct ratio of cost for the designated item
+          note: an initial can appear multiple times to achieve the correct ratio of cost per person
           examples: slbw, sl, bss, blwssb
 examples:      > a 9.34 ls      > add 8 lsbw      > a 23.11 lsbs
+
 
 > { r | receipt | ls }
      this command lists the current subtotals and every item that hasn't been deleted
 examples:      > r      > receipt      > ls
+
 
 > { d | drop | delete } { ENTRY_ID | { p | prev | previous } }
      this command deletes the item with the given id or the previous item
@@ -38,12 +40,15 @@ examples:      > r      > receipt      > ls
           examples: 0, 8, 3
 examples:      > d 4      > drop prev      > delete p      > drop 6
 
+
 > { q | s | e | quit | stop | exit }
      this command ends the program, along with printing everyone's totals of what they owe
 examples:      > q      > s      > e      > quit      > stop      > exit
 
+
 > { h | help }
      this command prints a list of all allowable commands
+examples:      > h      > help
 ```
 
 The general usage scenario is as follows: add items from the grocery store receipt with `a`, periodically check progress with `r` and use `d` to fix any mistakes, then end the program with `q` to see the final results of what everyone owes.
