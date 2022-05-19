@@ -1,12 +1,6 @@
 # import the grocery_manager class from the other file
 from grocery_manager import Grocery_Manager
-
-# the initials that represent each person in the grocery calculator
-# edit this string to contain the valid initials for each person involved
-# a valid initial is anything except whitespace, but it's suggested to not use numbers to avoid confusion
-# capital and lowercase letters are allowed and will be distinguished between, and any other printable special character is allowed as well
-# this string cannot contain anything except the unique initials
-INITIALS = "slb"
+from config import INITIALS
 
 # print the introduction message
 print("Hello, Welcome to Grocery-Calculator!         By Sebastian Hardin")
