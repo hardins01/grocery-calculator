@@ -2,6 +2,7 @@
 from venmo_api import Client
 import sys
 import json
+import os
 
 
 # the initials that represent each person in the grocery calculator
@@ -12,44 +13,79 @@ import json
 INITIALS = "slb"
 
 # the list of venmo credentials
-# each entry in the list contains two strings: the email, followed by the password
+# each entry in the list contains three strings: username (without the @), email, and password
+# if full venmo capabilities are wanted, then everyone must provide their usernames and at least one person must provide their email and password
 # the list must have the same number of entries as INITIALS
 # each entry corresponds to the initial at the same index   i.e. the first set of credentials belongs to the first letter of INITIALS, etc
 # a credential can be left blank, but it must be present in the list
 CREDENTIALS = [
-     ("xxxxxxxx@xxxxxx.com", "xxxxxxxxx"),
-     ("", ""),
-     ("", "")
+     ("xxxxxxxx", "xxxxxxx@xxxxx.com", "xxxxxxxx"),
+     ("xxxxxxx", "", ""),
+     ("xxxxxx", "", "")
 ]
 
-# perform different actions based on command line argument
+
+# quit if no command line argument was given
 try:
      command = sys.argv[1]
 except IndexError:
-     print("no command given")
+     print("Error: no command-line argument was given\nUsage:    python config.py venmo-init    or    python config.py venmo-logout")
      quit()
 
+
+# quit if an invalid command line argument was given
 if len(sys.argv) > 2 or (command != "venmo-init" and command != "venmo-logout"):
-     print("invalid command given")
+     print("Error: invalid command-line argument given\nUsage:    python config.py venmo-init    or    python config.py venmo-logout")
      quit()
 
+
+# if the user wants to initialize credentials
 if command == "venmo-init":
-     print("command given: venmo-init")
+     # first check that the file isn't empty
+     if os.stat("access_tokens.json").st_size != 0:
+          print("Error: access tokens already initialized, clear them first with    python config.py venmo-logout")
+          quit()
+
+     print("\n============ begin 'venmo-api' messages ============\n")
+     
+     # proceed to create the access tokens for whoever provided credentials
      access_tokens = {}
-     for index, cred in enumerate(CREDENTIALS):
-          if cred[0] != "" and cred[1] != "":
-               access_tokens.update({INITIALS[index]: Client.get_access_token(username=cred[0], password=cred[1])})
+     for cred in CREDENTIALS:
+          if cred[1] != "" and cred[2] != "":
+               print("Generating access token for {}".format(cred[0]))
+               access_tokens.update({cred[0]: Client.get_access_token(username=cred[1], password=cred[2])})
+          else:
+               access_tokens.update({cred[0]: ""})
+     
+     print("\n============= end 'venmo-api' messages =============\n")
+
      with open("access_tokens.json", "w") as file:
           json.dump(access_tokens, file)
      
+     quit()
+     
 
+# if the user wants to log out and clear their credentials
 if command == "venmo-logout":
-     print("command given: venmo-logout")
+     # first check that the file has contents to clear
+     if os.stat("access_tokens.json").st_size == 0:
+          print("Error: no access tokens to log out with, generate them with    python config.py venmo-init")
+          quit()
+
+     print("\n============ begin 'venmo-api' messages ============\n")
+     
+     # proceed to log out of the access tokens
      access_tokens = {}
      with open("access_tokens.json", "r") as file:
           access_tokens = json.load(file)
      for token in access_tokens.values():
-          client = Client(access_token=token)
-          client.log_out(token)
+          if token != "":
+               client = Client(access_token=token)
+               client.log_out(token)
+     
+     print("\n============= end 'venmo-api' messages =============\n")
+
+     # clear the contents of the file
      open('access_tokens.json', 'w').close()
 
+     quit()
