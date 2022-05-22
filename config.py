@@ -19,9 +19,9 @@ INITIALS = "slb"
 # each entry corresponds to the initial at the same index   i.e. the first set of credentials belongs to the first letter of INITIALS, etc
 # a credential can be left blank, but it must be present in the list
 CREDENTIALS = [
-     ("xxxxxxxx", "xxxxxxx@xxxxx.com", "xxxxxxxx"),
-     ("xxxxxxx", "", ""),
-     ("xxxxxx", "", "")
+     ("xxxxx", "xxxxxxx@xxxxxx.com", "xxxxxxxx"),
+     ("xxxx", "", ""),
+     ("xxxxxxxxxxxxxx", "", "")
 ]
 
 

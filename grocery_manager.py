@@ -119,4 +119,8 @@ class Grocery_Manager:
           
           return return_code
 
+     # function to get the subtotal for the given person, their stake in the total amount
+     # person must be one of the initials
+     def get_subtotal(self, person):
+          return self.people_totals[person]
 

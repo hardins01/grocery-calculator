@@ -1,6 +1,9 @@
 # import the grocery_manager class from the other file
 from grocery_manager import Grocery_Manager
 from config import INITIALS, CREDENTIALS
+import json
+import os
+from venmo_api import Client
 
 
 def main():
@@ -175,13 +178,57 @@ def main():
                                    if len(payer) != 1 or payer not in INITIALS:
                                         print("Invalid input, must be one of the people provided in config.py")
                               
-                              payer_index = INITIALS.find(payer)
-                              
-                              print("payer: {} {}".format(payer, CREDENTIALS[payer_index][0]))
+                              # check if credentials have been generated (access_tokens.json isn't empty)
+                              if os.stat("access_tokens.json").st_size == 0:
+                                   print("Error: credentials not found, please generate them with    python config.py venmo-init")
+                              else:
+                                   # prep for venmo logic
+                                   print()
+                                   payer_index = INITIALS.find(payer)
+                                   payer_username = CREDENTIALS[payer_index][0]
+                                   tokens = []
+                                   with open("access_tokens.json", "r") as token_file:
+                                        tokens = json.load(token_file)
+                                   payer_access_token = tokens[payer_username]
 
-                              # INSERT VENMO LOGIC HERE
-
-
+                                   # if the payer didn't provide credentials, then the others will pay them
+                                   if payer_access_token == "":
+                                        for ower in INITIALS:
+                                             if ower != payer:
+                                                  ower_index = INITIALS.find(ower)
+                                                  ower_username = CREDENTIALS[ower_index][0]
+                                                  ower_access_token = tokens[ower_username]
+                                                  owed_amount = groc_man.get_subtotal(ower)
+                                                  if owed_amount == 0:
+                                                       print("{} owes $0, so no payment was made".format(ower_username))
+                                                  elif ower_access_token == "":
+                                                       print("No access token provided for {}, cannot complete that transaction".format(ower_username))
+                                                  else:
+                                                       # complete a payment on behalf of the owner to the payer
+                                                       client = Client(ower_access_token)
+                                                       users = client.user.search_for_users(query=payer_username)
+                                                       for user in users:
+                                                            if user.username == payer_username:
+                                                                 print("Paying {} ${:.2f} from {}'s account with their default payment method".format(payer_username, owed_amount, ower_username))
+                                                                 client.payment.send_money(amount=owed_amount, note="Groceries", target_user_id=user.id)
+                                                                 break
+                                   else:
+                                        # the payer did give credentials, so complete requests on their behalf
+                                        for ower in INITIALS:
+                                             if ower != payer:
+                                                  ower_index = INITIALS.find(ower)
+                                                  ower_username = CREDENTIALS[ower_index][0]
+                                                  owed_amount = groc_man.get_subtotal(ower)
+                                                  if owed_amount == 0:
+                                                       print("{} owes $0, so no request was made".format(ower_username))
+                                                  else:
+                                                       client = Client(payer_access_token)
+                                                       users = client.user.search_for_users(query=ower_username)
+                                                       for user in users:
+                                                            if user.username == ower_username:
+                                                                 print("Requesting ${:.2f} from {} on behalf of {}".format(owed_amount, ower_username, payer_username))
+                                                                 client.payment.request_money(amount=owed_amount, note="Groceries", target_user_id=user.id)
+                                                                 break
                               keep_looping = False
 
                     else:
