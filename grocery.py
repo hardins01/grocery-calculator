@@ -135,8 +135,8 @@ def main():
                     "\td / drop / delete : Delete a specific item or the most recently added active item\n\n"\
                     "\t\t> { d | drop | delete } { ENTRY_ID | { p | prev | previous } }\n\n"\
                     "\t\tENTRY_ID = the id of the item to be deleted, must be a valid id that hasn't already been deleted\n\n"\
-                    "\tq / quit / s / stop / e / exit : Exit the program, printing everyone's totals that they owe\n\n"\
-                    "\t\t> { q | s | e | quit | stop | exit }\n\n"\
+                    "\tq / quit / s / stop / e / exit : Exit the program, printing everyone's totals that they owe, and optionally initiate Venmo transactions\n\n"\
+                    "\t\t> { q | s | e | quit | stop | exit } [{ v | venmo }]\n\n"\
                     "\th / help : Bring up this menu, a list of all available commands to use\n\n"\
                     "\t\t> { h | help }\n\n"
                )
@@ -146,9 +146,9 @@ def main():
                # check if the user wants to end usage with venmo transaction(s)
                if len(user_input) == 1:
                     confirmation = ""
+                    groc_man.print_results(False)
                     while confirmation not in confirmation_commands:
-                         print("Are you sure you want to stop running Grocery-Calculator, confirming your entries?")
-                         print("You won't be able to go back and change them, but the results will be printed one more time for you as the program quits")
+                         print("Are you sure you want to stop running Grocery-Calculator, confirming the above totals?")
                          print("(y/n) > ", end="")
                          confirmation = input()
                          if confirmation not in confirmation_commands:
@@ -161,8 +161,9 @@ def main():
                else:
                     if user_input[1] in venmo_commands:
                          confirmation = ""
+                         groc_man.print_results(False)
                          while confirmation not in confirmation_commands:
-                              print("Are you sure you want to stop running Grocery-Calculator, confirming your entries and initiating Venmo requests?")
+                              print("Are you sure you want to stop running Grocery-Calculator, confirming the above totals and initiating Venmo requests?")
                               print("(y/n) > ", end="")
                               confirmation = input()
                               if confirmation not in confirmation_commands:
@@ -242,7 +243,7 @@ def main():
 
      # print the results
      print("")
-     groc_man.print_results()
+     groc_man.print_results(True)
      print("\nThank you for using Grocery-Calculator!")
 
 

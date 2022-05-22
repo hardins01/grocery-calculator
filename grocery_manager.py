@@ -50,10 +50,10 @@ class Grocery_Manager:
           return len(self.entries)-1
 
      # function to print the final results, which are the subtotals and total
-     def print_results(self):
+     def print_results(self, results_str):
 
           # print everyone's subtotals
-          print("Results:")
+          if results_str: print("Results:")
           for person in self.people_totals:
                print(f"{person}:       $ {abs(self.people_totals[person]):.2f}")
           

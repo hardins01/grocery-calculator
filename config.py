@@ -5,12 +5,14 @@ import json
 import os
 
 
+
+
 # the initials that represent each person in the grocery calculator
 # edit this string to contain the valid initials for each person involved
 # a valid initial is anything except whitespace, but it's suggested to not use numbers to avoid confusion
 # capital and lowercase letters are allowed and will be distinguished between, and any other printable special character is allowed as well
 # this string cannot contain anything except the unique initials
-INITIALS = "slb"
+INITIALS = "xyz"
 
 # the list of venmo credentials
 # each entry in the list contains three strings: username (without the @), email, and password
@@ -23,6 +25,8 @@ CREDENTIALS = [
      ("xxxx", "", ""),
      ("xxxxxxxxxxxxxx", "", "")
 ]
+
+
 
 
 def main():
